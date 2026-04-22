@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento de Requisitos — Módulo de Creación de Ofertas 3X Movilidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1419;--card:#1e2a3a;--accent:#00d4aa;--accent-dim:#00a88a;--tp:#e8edf4;--ts:#8b9cb3;--border:#2d3d52;--ff:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;--r:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--bg);color:var(--tp);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+.c{max-width:960px;margin:0 auto;padding:2rem 1.5rem 4rem}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.hdr{text-align:center;padding:3rem 0 2rem}
+.hdr h1{font-size:2rem;font-weight:700;line-height:1.3;margin-bottom:.5rem}
+.hdr .sub{color:var(--ts);font-size:1.05rem;margin-bottom:.25rem}
+.hdr .dt{color:var(--accent);font-family:var(--fm);font-size:.9rem}
+.hl{height:3px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:2px;margin-top:1.5rem}
+.sb{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem 2rem;margin:2rem 0}
+.sb h2{font-size:1.1rem;color:var(--accent);margin-bottom:1rem}
+.sb ul{list-style:none}.sb li{padding:.4rem 0 .4rem 1.4rem;position:relative;color:var(--ts);font-size:.95rem}
+.sb li::before{content:'▸';position:absolute;left:0;color:var(--accent)}
+.st{font-size:1.35rem;font-weight:700;margin:3rem 0 1.25rem;padding-left:1rem;border-left:4px solid;border-image:linear-gradient(180deg,var(--accent),var(--accent-dim)) 1}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem 2rem;margin:2rem 0}
+.toc h2{font-size:1.1rem;color:var(--accent);margin-bottom:1rem}
+.toc ol{padding-left:1.2rem}.toc li{padding:.25rem 0;font-size:.93rem}.toc li a{color:var(--ts)}.toc li a:hover{color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+th{background:var(--card);color:var(--accent);text-align:left;padding:.7rem 1rem;border-bottom:2px solid var(--accent);font-weight:600}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--border);color:var(--ts);vertical-align:top}
+tr:hover td{background:rgba(0,212,170,.04)}
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);margin:1rem 0}.tw table{margin:0}
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}
+.gi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem}
+.gi strong{color:var(--accent);font-family:var(--fm);font-size:.85rem;display:block;margin-bottom:.35rem}
+.gi span{color:var(--ts);font-size:.88rem;line-height:1.55}
+.rq{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem 2rem;margin:1.75rem 0}
+.rh{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
+.bg{background:var(--accent);color:var(--bg);font-family:var(--fm);font-weight:700;font-size:.8rem;padding:.25rem .7rem;border-radius:6px;white-space:nowrap}
+.rh h3{font-size:1.1rem;font-weight:600}
+.us{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1rem 0;background:rgba(0,212,170,.05);border-radius:0 8px 8px 0;font-style:italic;color:var(--ts);font-size:.93rem;line-height:1.6}
+.cl{font-size:.85rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin:1.25rem 0 .75rem}
+.ca{list-style:none;counter-reset:ca}
+.ca li{counter-increment:ca;padding:.75rem 0 .75rem 2.2rem;position:relative;color:var(--ts);font-size:.9rem;line-height:1.6;border-bottom:1px solid rgba(45,61,82,.4)}
+.ca li:last-child{border-bottom:none}
+.ca li::before{content:counter(ca);position:absolute;left:0;top:.8rem;background:var(--border);color:var(--accent);font-family:var(--fm);font-size:.75rem;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.kw{color:var(--accent);font-weight:700;font-family:var(--fm);font-size:.85rem}
+.ac-title{font-weight:600;color:var(--tp);display:block;margin-bottom:.35rem}
+.gh{display:block;padding-left:.5rem;margin:.15rem 0}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}
+.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem}
+.tc h3{color:var(--accent);font-size:.95rem;margin-bottom:.75rem}
+.tc ul{list-style:none}.tc li{padding:.3rem 0 .3rem 1.2rem;position:relative;color:var(--ts);font-size:.88rem}
+.tc li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
+.dod{list-style:none;counter-reset:dod}
+.dod li{counter-increment:dod;padding:.5rem 0 .5rem 2.2rem;position:relative;color:var(--ts);font-size:.9rem;border-bottom:1px solid rgba(45,61,82,.3)}
+.dod li:last-child{border-bottom:none}
+.dod li::before{content:counter(dod);position:absolute;left:0;top:.55rem;background:var(--accent);color:var(--bg);font-family:var(--fm);font-size:.7rem;width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.ft{text-align:center;padding:3rem 0 1rem;color:var(--ts);font-size:.85rem;border-top:1px solid var(--border);margin-top:3rem}
+@media(max-width:700px){.c{padding:1rem}.hdr h1{font-size:1.5rem}.gl,.tg{grid-template-columns:1fr}.rq{padding:1.25rem 1rem}}
+@media print{body{background:#fff;color:#1a1a1a;font-size:12px}.c{max-width:100%;padding:0}.hdr h1{color:#0a6e5a}.sb,.toc,.rq,.tc,.tw{border-color:#ccc;background:#f9f9f9}.kw{color:#0a6e5a}.bg{background:#0a6e5a;color:#fff}.st{border-image:none;border-left-color:#0a6e5a}th{background:#f0f0f0;color:#0a6e5a;border-bottom-color:#0a6e5a}td{color:#333;border-bottom-color:#ddd}.us{border-left-color:#0a6e5a;background:#f0faf7}.ft{display:none}.ca li::before{background:#ddd;color:#0a6e5a}.dod li::before{background:#0a6e5a}}
+</style>
+</head>
+<body>
+<div class="c">
+
+<header class="hdr">
+<h1>Documento de Requisitos — Módulo de Creación de Ofertas 3X Movilidad</h1>
+<p class="sub">Seguros Bolívar — Motor Paramétrico de Ofertas Vehiculares</p>
+<p class="dt">Abril 2026</p>
+<div class="hl"></div>
+</header>
+
+<div class="sb">
+<h2>Resumen Ejecutivo</h2>
+<ul>
+<li>Motor paramétrico tipo "Lego" para crear, configurar y gestionar ofertas de seguros vehiculares sin dependencia de TI.</li>
+<li>MVP inicial: tres ofertas para segmento Pesados — Premium, Estándar y Clásico.</li>
+<li>Arquitectura separada del core (Tronador): reglas de negocio parametrizables, integración vía APIs REST.</li>
+<li>Historial de cambios (no versionamiento) para trazabilidad completa y cumplimiento regulatorio.</li>
+<li>15 requisitos funcionales y no funcionales que cubren desde creación hasta persistencia y seguridad.</li>
+</ul>
+</div>
+
+<div class="toc">
+<h2>Tabla de Contenidos</h2>
+<ol>
+<li><a href="#func">Funcionalidades e Impacto 3X</a></li>
+<li><a href="#glosario">Glosario</a></li>
+<li><a href="#r1">R1 — Creación de Ofertas con Campos Parametrizables</a></li>
+<li><a href="#r2">R2 — Gestión de Coberturas por Oferta</a></li>
+<li><a href="#r3">R3 — Gestión de Servicios y Asistencias</a></li>
+<li><a href="#r4">R4 — Edición de Ofertas con Historial de Cambios</a></li>
+<li><a href="#r5">R5 — Duplicación de Ofertas</a></li>
+<li><a href="#r6">R6 — Inactivación de Ofertas</a></li>
+<li><a href="#r7">R7 — Búsqueda y Filtrado de Ofertas</a></li>
+<li><a href="#r8">R8 — Reglas de Visibilidad para Intermediarios</a></li>
+<li><a href="#r9">R9 — Gestión de Listas de Valores Dinámicas</a></li>
+<li><a href="#r10">R10 — Integración con Motor Tarifario y Sistemas Externos</a></li>
+<li><a href="#r11">R11 — Gestión de Exclusiones y Restricciones</a></li>
+<li><a href="#r12">R12 — Generación de Documentos por Oferta</a></li>
+<li><a href="#r13">R13 — Configuración de Reaseguro y Coaseguro</a></li>
+<li><a href="#r14">R14 — Seguridad, Rendimiento y Escalabilidad</a></li>
+<li><a href="#r15">R15 — Modelo de Datos y Persistencia</a></li>
+<li><a href="#tech">Notas Técnicas</a></li>
+<li><a href="#integ">Integraciones</a></li>
+<li><a href="#mvp">Ofertas MVP</a></li>
+<li><a href="#dod">Definition of Done</a></li>
+</ol>
+</div>
+
+<h2 class="st" id="func">Funcionalidades e Impacto en Crecimiento 3X</h2>
+<div class="tw">
+<table>
+<thead><tr><th>Funcionalidad</th><th>Descripción Técnica</th><th>Impacto en Crecimiento 3X</th></tr></thead>
+<tbody>
+<tr><td>Creación paramétrica de ofertas</td><td>Motor tipo Lego con campos dinámicos, listas de valores autónomas y reglas configurables</td><td>Reduce time-to-market de semanas a horas para nuevos productos</td></tr>
+<tr><td>Coberturas con tipos de datos flexibles</td><td>Límites, deducibles y valores expresados en %, SMDLV, $COP, días, con reglas condicionales</td><td>Permite diferenciación granular entre ofertas (Premium vs Clásico)</td></tr>
+<tr><td>Duplicación de ofertas</td><td>Clonar oferta existente con todos sus componentes para crear variantes</td><td>Acelera creación de nuevas ofertas basadas en plantillas exitosas</td></tr>
+<tr><td>Tipificación coberturas vs servicios</td><td>Separación visual y lógica entre coberturas tradicionales y asistencias/servicios</td><td>Claridad comercial para intermediarios, mejor experiencia de venta</td></tr>
+<tr><td>Reglas dinámicas de visibilidad</td><td>Intermediario ve solo ofertas aplicables al vehículo consultado</td><td>Reduce errores de cotización, mejora conversión</td></tr>
+<tr><td>Integración con motor tarifario</td><td>Conexión API con motor de tarificación para cálculo automático de primas</td><td>Cotización en tiempo real sin intervención manual</td></tr>
+<tr><td>Historial de cambios con auditoría</td><td>Registro completo de modificaciones sin versionamiento</td><td>Cumplimiento regulatorio y trazabilidad operativa</td></tr>
+<tr><td>Listas de valores autónomas</td><td>Gestión dinámica de catálogos (marcas, líneas, combustibles, canales)</td><td>Flexibilidad para adaptarse a cambios de mercado sin deploys</td></tr>
+<tr><td>Generación de documentos</td><td>Carátula, póliza y clausulado parametrizados por oferta</td><td>Automatización documental que escala con el volumen de ofertas</td></tr>
+<tr><td>Códigos únicos auto-generados</td><td>Identificador consecutivo único por oferta y cobertura mapeado en todos los procesos</td><td>Trazabilidad end-to-end desde cotización hasta siniestro</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 class="st" id="glosario">Glosario</h2>
+<div class="gl">
+<div class="gi"><strong>Motor_Ofertas</strong><span>Módulo de software que permite la creación, edición, duplicación, búsqueda e inactivación de ofertas de seguros vehiculares de forma paramétrica.</span></div>
+<div class="gi"><strong>Oferta</strong><span>Configuración comercial compuesta por coberturas, exclusiones, asistencias, documentos impresos, variables abiertas y reglas de negocio.</span></div>
+<div class="gi"><strong>Cobertura</strong><span>Componente de una oferta que define la protección otorgada al asegurado, con límites, deducibles y valores configurables.</span></div>
+<div class="gi"><strong>Servicio_Asistencia</strong><span>Subtipo de cobertura que representa asistencias y servicios (grúa, asistencia jurídica, avería, accidente).</span></div>
+<div class="gi"><strong>SMDLV / SMMLV</strong><span>Salario Mínimo Diario / Mensual Legal Vigente de Colombia, unidades de referencia para expresar valores.</span></div>
+<div class="gi"><strong>Regla_Condicional</strong><span>Lógica de negocio que determina el valor de un límite o deducible en función de condiciones (ej. por rango de Valor_Asegurado).</span></div>
+<div class="gi"><strong>Lista_Valores</strong><span>Catálogo dinámico de opciones parametrizables (marcas, líneas, tipos de vehículo, canales, combustibles).</span></div>
+<div class="gi"><strong>Código_Oferta</strong><span>Identificador único consecutivo auto-generado que identifica una oferta en todos los procesos del sistema.</span></div>
+<div class="gi"><strong>Código_Cobertura</strong><span>Identificador único auto-generado para cada cobertura, mapeado transversalmente en cotización, emisión y siniestros.</span></div>
+<div class="gi"><strong>Motor_Tarifario</strong><span>Sistema externo de tarificación que calcula primas basándose en la configuración de la oferta y las características del riesgo.</span></div>
+<div class="gi"><strong>Historial_Cambios</strong><span>Registro cronológico de todas las modificaciones realizadas sobre una oferta, incluyendo usuario, fecha, campo modificado, valor anterior y nuevo.</span></div>
+<div class="gi"><strong>Usuario_Administrador</strong><span>Línea de negocio de movilidad, autorizada para crear, editar y gestionar ofertas en el Motor_Ofertas.</span></div>
+</div>
+
+<h2 class="st" id="r1">Requisitos</h2>
+<div class="rq">
+<div class="rh"><span class="bg">R1</span><h3>Creación de Ofertas con Campos Parametrizables</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero crear una nueva oferta de seguros vehiculares configurando todos sus campos de forma paramétrica, para que pueda lanzar productos al mercado sin depender del equipo de TI.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Formulario de creación completo</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad accede al módulo de creación de ofertas</span><span class="gh"><span class="kw">Cuando</span> abre el formulario de nueva oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta los campos configurables: Nombre, Descripción, Tipo de Oferta, Dirigido a, Canal Comercial, Clave Intermediario, Tipo de Póliza, Tipo de Colectiva, Tipo de Vehículo Admitido (multi-selección), Tipo de Servicio, Marca (multi-selección con autocompletado), Línea (multi-selección con autocompletado), Tipo de Combustible, Vigencia de Cotizaciones, Requiere Inspección (booleano), Sistema Origen, Forma de Pago, Periodicidad Vigencia, Fecha Inicio Vigencia, Fecha Fin Vigencia, Estado, Color, Qué Transporta, Campos Adicionales, Reaseguro, Coaseguro.</span></li>
+<li><span class="ac-title">AC2: Generación de código y estado inicial</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha completado todos los campos obligatorios del formulario</span><span class="gh"><span class="kw">Cuando</span> confirma la creación de la oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema genera un Código_Oferta único consecutivo y persiste la oferta en estado "Borrador".</span></li>
+</ol>
+</div>
+
+<p style="text-align:center;color:var(--ts);margin:2rem 0;font-size:.9rem">⚠️ Este es un resumen del documento completo. Para ver los 15 requisitos con todos sus criterios de aceptación, consulte el <a href="https://github.com/dianacalarcon/Gestion_PO2/blob/main/docs/specs/requirements-modulo-ofertas-3x-movilidad.html">documento fuente en el repositorio</a>.</p>
+
+<footer class="ft">
+<p>Documento de Requisitos — Módulo de Creación de Ofertas 3X Movilidad · Seguros Bolívar · Abril 2026</p>
+<p>Criterios de aceptación en formato Gherkin (Dado / Cuando / Entonces)</p>
+</footer>
+
+</div>
+</body>
+</html>
