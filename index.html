@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -111,6 +111,7 @@ tr:hover td{background:rgba(0,212,170,.04)}
 </ol>
 </div>
 
+<!-- Funcionalidades e Impacto 3X -->
 <h2 class="st" id="func">Funcionalidades e Impacto en Crecimiento 3X</h2>
 <div class="tw">
 <table>
@@ -130,6 +131,7 @@ tr:hover td{background:rgba(0,212,170,.04)}
 </table>
 </div>
 
+<!-- Glosario -->
 <h2 class="st" id="glosario">Glosario</h2>
 <div class="gl">
 <div class="gi"><strong>Motor_Ofertas</strong><span>Módulo de software que permite la creación, edición, duplicación, búsqueda e inactivación de ofertas de seguros vehiculares de forma paramétrica.</span></div>
@@ -146,6 +148,7 @@ tr:hover td{background:rgba(0,212,170,.04)}
 <div class="gi"><strong>Usuario_Administrador</strong><span>Línea de negocio de movilidad, autorizada para crear, editar y gestionar ofertas en el Motor_Ofertas.</span></div>
 </div>
 
+<!-- R1 -->
 <h2 class="st" id="r1">Requisitos</h2>
 <div class="rq">
 <div class="rh"><span class="bg">R1</span><h3>Creación de Ofertas con Campos Parametrizables</h3></div>
@@ -154,11 +157,341 @@ tr:hover td{background:rgba(0,212,170,.04)}
 <ol class="ca">
 <li><span class="ac-title">AC1: Formulario de creación completo</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad accede al módulo de creación de ofertas</span><span class="gh"><span class="kw">Cuando</span> abre el formulario de nueva oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta los campos configurables: Nombre, Descripción, Tipo de Oferta, Dirigido a, Canal Comercial, Clave Intermediario, Tipo de Póliza, Tipo de Colectiva, Tipo de Vehículo Admitido (multi-selección), Tipo de Servicio, Marca (multi-selección con autocompletado), Línea (multi-selección con autocompletado), Tipo de Combustible, Vigencia de Cotizaciones, Requiere Inspección (booleano), Sistema Origen, Forma de Pago, Periodicidad Vigencia, Fecha Inicio Vigencia, Fecha Fin Vigencia, Estado, Color, Qué Transporta, Campos Adicionales, Reaseguro, Coaseguro.</span></li>
 <li><span class="ac-title">AC2: Generación de código y estado inicial</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha completado todos los campos obligatorios del formulario</span><span class="gh"><span class="kw">Cuando</span> confirma la creación de la oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema genera un Código_Oferta único consecutivo y persiste la oferta en estado "Borrador".</span></li>
+<li><span class="ac-title">AC3: Unicidad del nombre de oferta</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo y existen ofertas registradas</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad intenta crear una oferta con un nombre ya existente</span><span class="gh"><span class="kw">Entonces</span> el sistema bloquea la creación e informa que el Nombre de la oferta debe ser único.</span></li>
+<li><span class="ac-title">AC4: Carga dinámica de listas de valores</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a cualquier campo de selección en el formulario de oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema carga las opciones desde la Lista_Valores correspondiente de forma dinámica.</span></li>
+<li><span class="ac-title">AC5: Filtrado de marca y línea por tipo de vehículo</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está creando una oferta</span><span class="gh"><span class="kw">Cuando</span> selecciona un Tipo de Vehículo Admitido</span><span class="gh"><span class="kw">Entonces</span> el sistema filtra las opciones de Marca y Línea para mostrar solo las compatibles con el tipo de vehículo seleccionado.</span></li>
+<li><span class="ac-title">AC6: Validación de campos obligatorios</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad tiene campos obligatorios sin completar en el formulario</span><span class="gh"><span class="kw">Cuando</span> intenta confirmar la creación de la oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema resalta los campos faltantes con mensajes de validación descriptivos y bloquea la creación.</span></li>
+<li><span class="ac-title">AC7: Registro en historial de cambios</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se crea exitosamente una nueva oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema registra la creación en el Historial_Cambios con el usuario, fecha, hora y todos los valores iniciales configurados.</span></li>
+<li><span class="ac-title">AC8: Rendimiento de creación</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha confirmado la creación de una oferta</span><span class="gh"><span class="kw">Cuando</span> el sistema procesa la operación</span><span class="gh"><span class="kw">Entonces</span> la operación de creación se completa en menos de 3 segundos.</span></li>
 </ol>
 </div>
 
-<p style="text-align:center;color:var(--ts);margin:2rem 0;font-size:.9rem">⚠️ Este es un resumen del documento completo. Para ver los 15 requisitos con todos sus criterios de aceptación, consulte el <a href="https://github.com/dianacalarcon/Gestion_PO2/blob/main/docs/specs/requirements-modulo-ofertas-3x-movilidad.html">documento fuente en el repositorio</a>.</p>
+<!-- R2 -->
+<div class="rq" id="r2">
+<div class="rh"><span class="bg">R2</span><h3>Gestión de Coberturas por Oferta</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero asociar N coberturas a una oferta configurando límites, deducibles y valores en múltiples tipos de datos, para que pueda definir la protección exacta que ofrece cada producto.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Gestión ilimitada de coberturas</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad accede a la sección de coberturas de una oferta</span><span class="gh"><span class="kw">Cuando</span> interactúa con la lista de coberturas</span><span class="gh"><span class="kw">Entonces</span> el sistema permite agregar, editar y eliminar coberturas sin límite de cantidad.</span></li>
+<li><span class="ac-title">AC2: Campos de configuración por cobertura</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad agrega o edita una cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta los campos: Nombre, Descripción, Límite (con selector de tipo de dato), Valor de Cobertura, Deducible (con selector de tipo de dato), Estado (activa/inactiva), Obligatoria/Opcional (booleano), Fecha Inicio Vigencia, Fecha Fin Vigencia.</span></li>
+<li><span class="ac-title">AC3: Tipos de dato para límite</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura el campo Límite de una cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema permite expresarlo en: número absoluto, porcentaje (%) del Valor_Asegurado, número en SMDLV, pesos colombianos ($COP), o mediante una Regla_Condicional.</span></li>
+<li><span class="ac-title">AC4: Tipos de dato para deducible</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura el campo Deducible de una cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema permite expresarlo en: número absoluto, porcentaje (%), número en SMDLV, pesos colombianos ($COP), días, o fórmulas compuestas (ej. "10% - MIN 3 SMMLV").</span></li>
+<li><span class="ac-title">AC5: Valor de cobertura en días o N/A</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura el campo Valor de Cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema permite expresarlo en días o N/A.</span></li>
+<li><span class="ac-title">AC6: Configuración de reglas condicionales</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está configurando el límite de una cobertura</span><span class="gh"><span class="kw">Cuando</span> selecciona el tipo Regla_Condicional</span><span class="gh"><span class="kw">Entonces</span> el sistema permite definir rangos de condición con sus valores asociados (ej. Valor_Asegurado ≤ 150M: 8 SMDLV diarios; Valor_Asegurado > 150M: 12 SMDLV diarios).</span></li>
+<li><span class="ac-title">AC7: Generación de código de cobertura</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha configurado una cobertura</span><span class="gh"><span class="kw">Cuando</span> guarda la cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema genera un Código_Cobertura único auto-generado que se mapea transversalmente en los procesos de cotización, emisión y siniestros.</span></li>
+<li><span class="ac-title">AC8: Marcado obligatoria u opcional</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura una cobertura dentro de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema permite marcar cada cobertura como obligatoria u opcional.</span></li>
+<li><span class="ac-title">AC9: Confirmación al eliminar cobertura obligatoria</span><span class="gh"><span class="kw">Dado</span> que existe una cobertura marcada como obligatoria en la oferta</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad intenta eliminarla</span><span class="gh"><span class="kw">Entonces</span> el sistema solicita confirmación explícita antes de proceder.</span></li>
+<li><span class="ac-title">AC10: Unicidad global del código de cobertura</span><span class="gh"><span class="kw">Dado</span> que existen coberturas creadas en el sistema</span><span class="gh"><span class="kw">Cuando</span> se crea cualquier nueva cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema garantiza que el Código_Cobertura sea único a nivel global del sistema.</span></li>
+</ol>
+</div>
 
+<!-- R3 -->
+<div class="rq" id="r3">
+<div class="rh"><span class="bg">R3</span><h3>Gestión de Servicios y Asistencias</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero gestionar asistencias y servicios como un subtipo diferenciado de cobertura dentro de la oferta, para que los intermediarios distingan claramente entre coberturas tradicionales y servicios de asistencia.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Sección separada de servicios y asistencias</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a la configuración de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta una sección separada denominada "Servicios y Asistencias", visualmente diferenciada de la sección de coberturas tradicionales.</span></li>
+<li><span class="ac-title">AC2: Misma estructura técnica que coberturas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se gestiona un Servicio_Asistencia</span><span class="gh"><span class="kw">Entonces</span> el sistema lo gestiona bajo la misma estructura técnica de datos que las coberturas (Nombre, Descripción, Límite, Deducible, Valor, Estado, Obligatoria/Opcional, Vigencia).</span></li>
+<li><span class="ac-title">AC3: Asignación automática de tipo servicio</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está en la sección de Servicios y Asistencias</span><span class="gh"><span class="kw">Cuando</span> crea un nuevo Servicio_Asistencia</span><span class="gh"><span class="kw">Entonces</span> el sistema asigna automáticamente el tipo "Servicio" para diferenciarlo de las coberturas tradicionales de tipo "Cobertura".</span></li>
+<li><span class="ac-title">AC4: Tipos de evento para servicios</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura un servicio</span><span class="gh"><span class="kw">Entonces</span> el sistema permite configurar tipos de evento específicos: Avería y Accidente, cada uno con límites y condiciones independientes.</span></li>
+<li><span class="ac-title">AC5: Presentación separada para intermediarios</span><span class="gh"><span class="kw">Dado</span> que el Intermediario consulta una oferta disponible</span><span class="gh"><span class="kw">Cuando</span> visualiza el detalle de la oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta las coberturas tradicionales y los Servicio_Asistencia en secciones separadas con etiquetas claras.</span></li>
+<li><span class="ac-title">AC6: Código único y mapeo transversal para servicios</span><span class="gh"><span class="kw">Dado</span> que existen Servicio_Asistencia en el sistema</span><span class="gh"><span class="kw">Cuando</span> se crea cualquier nuevo Servicio_Asistencia</span><span class="gh"><span class="kw">Entonces</span> el sistema aplica las mismas reglas de Código_Cobertura único y mapeo transversal que a las coberturas.</span></li>
+</ol>
+</div>
+
+<!-- R4 -->
+<div class="rq" id="r4">
+<div class="rh"><span class="bg">R4</span><h3>Edición de Ofertas con Historial de Cambios</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero editar cualquier campo de una oferta existente y que el sistema registre automáticamente cada cambio realizado, para que exista trazabilidad completa sin necesidad de crear versiones.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Edición completa de oferta</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad accede a una oferta existente en modo edición</span><span class="gh"><span class="kw">Cuando</span> modifica cualquier campo de la oferta, sus coberturas o sus Servicio_Asistencia</span><span class="gh"><span class="kw">Entonces</span> el sistema permite la modificación de todos los campos.</span></li>
+<li><span class="ac-title">AC2: Registro detallado de cambios</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha realizado modificaciones en una oferta</span><span class="gh"><span class="kw">Cuando</span> guarda los cambios</span><span class="gh"><span class="kw">Entonces</span> el sistema registra en el Historial_Cambios: usuario que realizó el cambio, fecha y hora exacta (UTC), campo modificado, valor anterior y valor nuevo.</span></li>
+<li><span class="ac-title">AC3: Registro único sin versionamiento</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se edita cualquier oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema mantiene un único registro de oferta actualizado (no crea versiones separadas) y preserva el historial completo de modificaciones.</span></li>
+<li><span class="ac-title">AC4: Consulta del historial de cambios</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad accede al Historial_Cambios de una oferta</span><span class="gh"><span class="kw">Cuando</span> consulta los cambios registrados</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta los cambios en orden cronológico descendente (más reciente primero) con filtros por fecha, usuario y campo modificado.</span></li>
+<li><span class="ac-title">AC5: Historial de cambios en componentes asociados</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se modifican coberturas o Servicio_Asistencia asociados a una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema registra los cambios dentro del mismo Historial_Cambios, identificando claramente el componente modificado.</span></li>
+<li><span class="ac-title">AC6: Inactivación automática por fecha expirada</span><span class="gh"><span class="kw">Dado</span> que existe una oferta activa en el sistema</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad modifica la Fecha Fin Vigencia a una fecha pasada</span><span class="gh"><span class="kw">Entonces</span> el sistema cambia automáticamente el estado a "Inactiva" y registra ambos cambios en el Historial_Cambios.</span></li>
+<li><span class="ac-title">AC7: Consistencia del valor anterior en historial</span><span class="gh"><span class="kw">Dado</span> que se registran modificaciones en el Historial_Cambios</span><span class="gh"><span class="kw">Cuando</span> se almacena cualquier cambio</span><span class="gh"><span class="kw">Entonces</span> el sistema garantiza que el valor anterior almacenado corresponda exactamente al estado del campo antes de la modificación.</span></li>
+</ol>
+</div>
+
+<!-- R5 -->
+<div class="rq" id="r5">
+<div class="rh"><span class="bg">R5</span><h3>Duplicación de Ofertas</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero duplicar una oferta existente con todas sus coberturas, servicios y configuraciones, para que pueda crear variantes de productos rápidamente sin reconfigurar desde cero.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Copia completa de la oferta</span><span class="gh"><span class="kw">Dado</span> que existe una oferta en el sistema</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad selecciona la acción "Duplicar" sobre esa oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema crea una copia completa incluyendo: todos los campos de configuración, todas las coberturas con sus límites, deducibles y reglas condicionales, todos los Servicio_Asistencia, exclusiones, documentos impresos y campos adicionales.</span></li>
+<li><span class="ac-title">AC2: Nuevo código de oferta para la copia</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se duplica una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema asigna un nuevo Código_Oferta único consecutivo a la oferta duplicada.</span></li>
+<li><span class="ac-title">AC3: Nuevos códigos de cobertura para la copia</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se duplica una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema asigna nuevos Código_Cobertura únicos a cada cobertura y Servicio_Asistencia de la oferta duplicada.</span></li>
+<li><span class="ac-title">AC4: Nombre y estado de la copia</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se duplica una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema establece el Nombre como "[Nombre original] - Copia" y el estado como "Borrador".</span></li>
+<li><span class="ac-title">AC5: Redirección a edición tras duplicación</span><span class="gh"><span class="kw">Dado</span> que la oferta duplicada se ha creado exitosamente</span><span class="gh"><span class="kw">Cuando</span> el sistema completa la operación de duplicación</span><span class="gh"><span class="kw">Entonces</span> redirige a la Línea de negocio de movilidad al formulario de edición de la nueva oferta para que pueda personalizar los campos.</span></li>
+<li><span class="ac-title">AC6: Registro de duplicación en historial</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se duplica una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema registra la duplicación en el Historial_Cambios de la nueva oferta indicando que fue creada como copia de la oferta original (referenciando el Código_Oferta de origen).</span></li>
+<li><span class="ac-title">AC7: Independencia de la oferta duplicada</span><span class="gh"><span class="kw">Dado</span> que existe una oferta duplicada en el sistema</span><span class="gh"><span class="kw">Cuando</span> se modifica la copia o la original</span><span class="gh"><span class="kw">Entonces</span> el sistema garantiza que la oferta duplicada sea completamente independiente de la original (modificar la copia no afecta la original y viceversa).</span></li>
+</ol>
+</div>
+
+<!-- R6 -->
+<div class="rq" id="r6">
+<div class="rh"><span class="bg">R6</span><h3>Inactivación de Ofertas</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero inactivar una oferta que ya no debe estar disponible para cotización, para que los intermediarios no puedan generar nuevas pólizas con productos descontinuados.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Confirmación antes de inactivar</span><span class="gh"><span class="kw">Dado</span> que existe una oferta activa en el sistema</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad selecciona la acción "Inactivar"</span><span class="gh"><span class="kw">Entonces</span> el sistema solicita confirmación explícita antes de proceder.</span></li>
+<li><span class="ac-title">AC2: Cambio de estado y registro en historial</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha solicitado inactivar una oferta</span><span class="gh"><span class="kw">Cuando</span> confirma la inactivación</span><span class="gh"><span class="kw">Entonces</span> el sistema cambia el estado de la oferta a "Inactiva" y registra el cambio en el Historial_Cambios.</span></li>
+<li><span class="ac-title">AC3: Exclusión de oferta inactiva para intermediarios</span><span class="gh"><span class="kw">Dado</span> que una oferta se encuentra en estado "Inactiva"</span><span class="gh"><span class="kw">Cuando</span> el Intermediario busca ofertas disponibles o accede al módulo de cotización</span><span class="gh"><span class="kw">Entonces</span> el sistema excluye la oferta de los resultados.</span></li>
+<li><span class="ac-title">AC4: Visibilidad para administrador con indicador</span><span class="gh"><span class="kw">Dado</span> que una oferta se encuentra en estado "Inactiva"</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a la vista de gestión de ofertas</span><span class="gh"><span class="kw">Entonces</span> el sistema mantiene la oferta visible con un indicador visual de estado inactivo.</span></li>
+<li><span class="ac-title">AC5: Reactivación de oferta con vigencia válida</span><span class="gh"><span class="kw">Dado</span> que existe una oferta inactiva cuya Fecha Fin Vigencia no ha expirado</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad solicita reactivarla</span><span class="gh"><span class="kw">Entonces</span> el sistema permite cambiar su estado a "Activa".</span></li>
+<li><span class="ac-title">AC6: Bloqueo de reactivación con vigencia expirada</span><span class="gh"><span class="kw">Dado</span> que existe una oferta inactiva cuya Fecha Fin Vigencia ya expiró</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad intenta reactivarla</span><span class="gh"><span class="kw">Entonces</span> el sistema bloquea la reactivación y muestra un mensaje indicando que debe actualizar la fecha de vigencia primero.</span></li>
+</ol>
+</div>
+
+<!-- R7 -->
+<div class="rq" id="r7">
+<div class="rh"><span class="bg">R7</span><h3>Búsqueda y Filtrado de Ofertas</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero buscar y filtrar ofertas por múltiples criterios, para que pueda localizar rápidamente la oferta que necesito gestionar entre un catálogo creciente de productos.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Panel de búsqueda por texto libre</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede al módulo de gestión de ofertas</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta un panel de búsqueda con campo de texto libre que busca coincidencias en Nombre, Descripción y Código_Oferta.</span></li>
+<li><span class="ac-title">AC2: Filtros combinables</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede al panel de búsqueda</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta filtros combinables por: Estado (Activa, Inactiva, Borrador), Tipo de Oferta, Canal Comercial, Tipo de Vehículo Admitido, Rango de Fecha de Vigencia y Sistema Origen.</span></li>
+<li><span class="ac-title">AC3: Combinación de filtros con operación AND</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha seleccionado múltiples filtros</span><span class="gh"><span class="kw">Cuando</span> aplica la búsqueda</span><span class="gh"><span class="kw">Entonces</span> el sistema combina los criterios con operación AND y muestra solo las ofertas que cumplan todos los filtros.</span></li>
+<li><span class="ac-title">AC4: Información mostrada en resultados</span><span class="gh"><span class="kw">Dado</span> que existen ofertas que coinciden con los criterios de búsqueda</span><span class="gh"><span class="kw">Cuando</span> el sistema presenta los resultados</span><span class="gh"><span class="kw">Entonces</span> muestra para cada oferta: Código_Oferta, Nombre, Estado, Tipo de Oferta, Canal Comercial, Fecha Inicio Vigencia, Fecha Fin Vigencia y cantidad de coberturas asociadas.</span></li>
+<li><span class="ac-title">AC5: Rendimiento de búsqueda</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ejecuta una búsqueda</span><span class="gh"><span class="kw">Cuando</span> el sistema procesa la consulta</span><span class="gh"><span class="kw">Entonces</span> la búsqueda se ejecuta con una latencia percibida inferior a 500 milisegundos.</span></li>
+<li><span class="ac-title">AC6: Mensaje cuando no hay resultados</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad ha aplicado filtros de búsqueda</span><span class="gh"><span class="kw">Cuando</span> no existen ofertas que coincidan con los criterios</span><span class="gh"><span class="kw">Entonces</span> el sistema muestra un mensaje indicando "No se encontraron ofertas con los criterios seleccionados" y sugiere limpiar los filtros.</span></li>
+<li><span class="ac-title">AC7: Ordenamiento de resultados</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad visualiza los resultados de búsqueda</span><span class="gh"><span class="kw">Entonces</span> el sistema permite ordenar los resultados por Nombre, Código_Oferta, Fecha de Creación o Estado.</span></li>
+</ol>
+</div>
+
+<!-- R8 -->
+<div class="rq" id="r8">
+<div class="rh"><span class="bg">R8</span><h3>Reglas de Visibilidad para Intermediarios</h3></div>
+<div class="us">Como Intermediario, quiero ver solo las ofertas aplicables al vehículo que estoy consultando, para que pueda cotizar de forma precisa sin riesgo de seleccionar un producto incompatible.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Filtrado por compatibilidad del vehículo</span><span class="gh"><span class="kw">Dado</span> que el Intermediario consulta ofertas disponibles para un vehículo específico</span><span class="gh"><span class="kw">Cuando</span> el sistema evalúa las ofertas disponibles</span><span class="gh"><span class="kw">Entonces</span> filtra y muestra solo las ofertas cuyo Tipo de Vehículo Admitido, Marca, Línea, Tipo de Servicio y Tipo de Combustible sean compatibles con las características del vehículo consultado.</span></li>
+<li><span class="ac-title">AC2: Exclusión de ofertas inactivas y borrador</span><span class="gh"><span class="kw">Dado</span> que existen ofertas en estado "Inactiva" o "Borrador"</span><span class="gh"><span class="kw">Cuando</span> el Intermediario consulta ofertas disponibles</span><span class="gh"><span class="kw">Entonces</span> el sistema excluye todas las ofertas en esos estados de la vista del Intermediario.</span></li>
+<li><span class="ac-title">AC3: Exclusión de ofertas con vigencia expirada</span><span class="gh"><span class="kw">Dado</span> que existen ofertas cuya Fecha Fin Vigencia ha expirado</span><span class="gh"><span class="kw">Cuando</span> el Intermediario consulta ofertas disponibles</span><span class="gh"><span class="kw">Entonces</span> el sistema excluye todas las ofertas expiradas de la vista del Intermediario.</span></li>
+<li><span class="ac-title">AC4: Filtrado por canal comercial</span><span class="gh"><span class="kw">Dado</span> que el Intermediario pertenece a un canal comercial específico</span><span class="gh"><span class="kw">Cuando</span> consulta ofertas disponibles</span><span class="gh"><span class="kw">Entonces</span> el sistema muestra solo las ofertas configuradas para ese Canal Comercial o para "Todos los canales".</span></li>
+<li><span class="ac-title">AC5: Presentación de coberturas obligatorias y opcionales</span><span class="gh"><span class="kw">Dado</span> que el Intermediario visualiza una oferta aplicable</span><span class="gh"><span class="kw">Cuando</span> revisa el detalle de coberturas</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta las coberturas obligatorias como incluidas por defecto y las coberturas opcionales como seleccionables.</span></li>
+<li><span class="ac-title">AC6: Mensaje cuando no hay ofertas aplicables</span><span class="gh"><span class="kw">Dado</span> que el Intermediario consulta ofertas para un vehículo específico</span><span class="gh"><span class="kw">Cuando</span> no existen ofertas aplicables para las características del vehículo</span><span class="gh"><span class="kw">Entonces</span> el sistema muestra un mensaje indicando que no hay ofertas disponibles para ese vehículo.</span></li>
+<li><span class="ac-title">AC7: Rendimiento de resolución de visibilidad</span><span class="gh"><span class="kw">Dado</span> que el Intermediario consulta ofertas disponibles</span><span class="gh"><span class="kw">Cuando</span> el sistema resuelve la visibilidad</span><span class="gh"><span class="kw">Entonces</span> la resolución se completa en menos de 2 segundos.</span></li>
+</ol>
+</div>
+
+<!-- R9 -->
+<div class="rq" id="r9">
+<div class="rh"><span class="bg">R9</span><h3>Gestión de Listas de Valores Dinámicas</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero gestionar de forma autónoma los catálogos de valores (marcas, líneas, tipos de vehículo, canales, combustibles), para que pueda adaptar las opciones disponibles sin requerir cambios en el código o deploys.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Interfaz de administración de catálogos</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a la administración de Lista_Valores</span><span class="gh"><span class="kw">Entonces</span> el sistema proporciona una interfaz para gestionar los catálogos: Tipo de Oferta, Canal Comercial, Tipo de Póliza, Tipo de Colectiva, Tipo de Vehículo, Tipo de Servicio, Marca, Línea, Tipo de Combustible, Forma de Pago, Periodicidad Vigencia, Sistema Origen y Qué Transporta.</span></li>
+<li><span class="ac-title">AC2: Disponibilidad inmediata de nuevos valores</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está gestionando una Lista_Valores</span><span class="gh"><span class="kw">Cuando</span> agrega un nuevo valor al catálogo</span><span class="gh"><span class="kw">Entonces</span> el sistema hace disponible el nuevo valor inmediatamente en todos los formularios que consuman esa lista.</span></li>
+<li><span class="ac-title">AC3: Activación e inactivación sin eliminación</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad gestiona valores de una Lista_Valores</span><span class="gh"><span class="kw">Entonces</span> el sistema permite activar e inactivar valores individuales sin eliminarlos, preservando la integridad referencial con ofertas existentes.</span></li>
+<li><span class="ac-title">AC4: Aviso al inactivar valor en uso</span><span class="gh"><span class="kw">Dado</span> que un valor de Lista_Valores está siendo utilizado por ofertas activas</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad intenta inactivarlo</span><span class="gh"><span class="kw">Entonces</span> el sistema muestra un aviso indicando la cantidad de ofertas afectadas y solicita confirmación.</span></li>
+<li><span class="ac-title">AC5: Relaciones jerárquicas entre listas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se gestionan listas de valores con dependencias</span><span class="gh"><span class="kw">Entonces</span> el sistema soporta relaciones jerárquicas entre listas (ej. Línea depende de Marca, Marca depende de Tipo de Vehículo).</span></li>
+<li><span class="ac-title">AC6: Auditoría de cambios en listas de valores</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realiza cualquier cambio en una Lista_Valores</span><span class="gh"><span class="kw">Entonces</span> el sistema registra el cambio en un log de auditoría con usuario, fecha y acción realizada.</span></li>
+</ol>
+</div>
+
+<!-- R10 -->
+<div class="rq" id="r10">
+<div class="rh"><span class="bg">R10</span><h3>Integración con Motor Tarifario y Sistemas Externos</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero que las ofertas se integren con el motor tarifario y los sistemas externos (Fasecolda, Hecopot), para que las cotizaciones se calculen automáticamente y los datos de referencia estén siempre actualizados.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Envío de configuración al motor tarifario</span><span class="gh"><span class="kw">Dado</span> que una oferta en estado "Activa" es seleccionada para cotización</span><span class="gh"><span class="kw">Cuando</span> el sistema inicia el proceso de tarificación</span><span class="gh"><span class="kw">Entonces</span> envía la configuración completa de coberturas, límites, deducibles y reglas condicionales al Motor_Tarifario vía API REST versionada.</span></li>
+<li><span class="ac-title">AC2: Recepción y presentación de primas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> el Motor_Tarifario responde con el cálculo de primas</span><span class="gh"><span class="kw">Entonces</span> el sistema recibe el cálculo de prima por cobertura y prima total, y presenta los resultados al Intermediario en menos de 5 segundos.</span></li>
+<li><span class="ac-title">AC3: Manejo de timeout del motor tarifario</span><span class="gh"><span class="kw">Dado</span> que se ha enviado una solicitud al Motor_Tarifario</span><span class="gh"><span class="kw">Cuando</span> el Motor_Tarifario no responde en 15 segundos</span><span class="gh"><span class="kw">Entonces</span> el sistema retorna un error descriptivo al usuario, activa el circuit breaker y registra el evento en el sistema de logs centralizado con Correlation-ID.</span></li>
+<li><span class="ac-title">AC4: Consulta de guía Fasecolda</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se requieren valores comerciales de referencia de vehículos</span><span class="gh"><span class="kw">Entonces</span> el sistema consulta la guía Fasecolda desde Tronador utilizando la integración existente del sistema core.</span></li>
+<li><span class="ac-title">AC5: Integración con Hecopot</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se requieren validaciones complementarias durante cotización y emisión</span><span class="gh"><span class="kw">Entonces</span> el sistema se integra con Hecopot para realizar dichas validaciones.</span></li>
+<li><span class="ac-title">AC6: Retries con backoff exponencial</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> una llamada a un sistema externo falla (Motor_Tarifario, Tronador, Hecopot)</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa retries con backoff exponencial.</span></li>
+<li><span class="ac-title">AC7: Propagación de Correlation-ID</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realiza cualquier petición a sistemas externos</span><span class="gh"><span class="kw">Entonces</span> el sistema propaga un Correlation-ID único para trazabilidad end-to-end.</span></li>
+<li><span class="ac-title">AC8: Versionamiento de APIs</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se exponen o consumen APIs de integración</span><span class="gh"><span class="kw">Entonces</span> el sistema versiona todas las APIs con prefijo en ruta (ej. /v1/api/ofertas) conforme al estándar API-First de la organización.</span></li>
+</ol>
+</div>
+
+<!-- R11 -->
+<div class="rq" id="r11">
+<div class="rh"><span class="bg">R11</span><h3>Gestión de Exclusiones y Restricciones</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero configurar exclusiones, clientes restringidos y marcas restringidas por oferta, para que pueda controlar con precisión el alcance de cada producto y mitigar riesgos.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Asociación de exclusiones textuales</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura exclusiones para una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema permite asociar N exclusiones textuales, cada una con Nombre, Descripción y Estado (activa/inactiva).</span></li>
+<li><span class="ac-title">AC2: Lista de clientes restringidos</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura restricciones para una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema permite configurar una lista de clientes restringidos, impidiendo que dichos clientes accedan a la cotización de esa oferta.</span></li>
+<li><span class="ac-title">AC3: Lista de marcas restringidas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura restricciones para una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema permite configurar una lista de marcas restringidas, excluyendo vehículos de esas marcas de la elegibilidad.</span></li>
+<li><span class="ac-title">AC4: Bloqueo de cotización para restringidos</span><span class="gh"><span class="kw">Dado</span> que existe un cliente o marca restringida para una oferta</span><span class="gh"><span class="kw">Cuando</span> el Intermediario intenta cotizar esa oferta para el cliente o marca restringida</span><span class="gh"><span class="kw">Entonces</span> el sistema bloquea la cotización y muestra un mensaje indicando que el cliente o vehículo no es elegible.</span></li>
+<li><span class="ac-title">AC5: Gestión en el nuevo sistema</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se gestionan listas de clientes y marcas restringidas</span><span class="gh"><span class="kw">Entonces</span> el sistema las gestiona dentro del nuevo sistema (no en el core Tronador).</span></li>
+<li><span class="ac-title">AC6: Registro de cambios en exclusiones y restricciones</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realizan cambios en exclusiones o restricciones de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema registra todos los cambios en el Historial_Cambios de la oferta.</span></li>
+</ol>
+</div>
+
+<!-- R12 -->
+<div class="rq" id="r12">
+<div class="rh"><span class="bg">R12</span><h3>Generación de Documentos por Oferta</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero configurar los documentos impresos (carátula, póliza, clausulado) asociados a cada oferta, para que la emisión de pólizas genere automáticamente la documentación correcta según el producto.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Tipos de documento asociables</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad configura documentos para una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema permite asociar los siguientes tipos de documento impreso: Carátula, Póliza y Clausulado.</span></li>
+<li><span class="ac-title">AC2: Selección de plantilla y variables dinámicas</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está configurando un documento para una oferta</span><span class="gh"><span class="kw">Cuando</span> selecciona el tipo de documento</span><span class="gh"><span class="kw">Entonces</span> el sistema permite seleccionar una plantilla de documento y asociar las variables dinámicas de la oferta (coberturas, límites, deducibles, datos del asegurado).</span></li>
+<li><span class="ac-title">AC3: Generación de documentos en emisión</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se emite una póliza basada en una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema genera los documentos con los datos parametrizados de la oferta y las coberturas seleccionadas.</span></li>
+<li><span class="ac-title">AC4: Repositorio centralizado de plantillas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se accede a las plantillas de documentos</span><span class="gh"><span class="kw">Entonces</span> el sistema las almacena en un repositorio centralizado accesible por el Motor_Ofertas.</span></li>
+<li><span class="ac-title">AC5: Bloqueo de activación sin documentos</span><span class="gh"><span class="kw">Dado</span> que una oferta no tiene documentos configurados</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad intenta activarla</span><span class="gh"><span class="kw">Entonces</span> el sistema bloquea la activación y muestra un mensaje indicando que debe configurar al menos la Carátula y el Clausulado.</span></li>
+</ol>
+</div>
+
+<!-- R13 -->
+<div class="rq" id="r13">
+<div class="rh"><span class="bg">R13</span><h3>Configuración de Reaseguro y Coaseguro</h3></div>
+<div class="us">Como Línea de negocio de movilidad, quiero configurar los parámetros de reaseguro y coaseguro por oferta, para que la distribución de riesgo quede definida desde la parametrización del producto.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Sección de configuración de reaseguro</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a la configuración de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta una sección de Reaseguro con campos para: tipo de reaseguro, porcentaje de cesión, reaseguradora asociada y condiciones especiales.</span></li>
+<li><span class="ac-title">AC2: Sección de configuración de coaseguro</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> la Línea de negocio de movilidad accede a la configuración de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema presenta una sección de Coaseguro con campos para: porcentaje de participación por aseguradora y aseguradora líder.</span></li>
+<li><span class="ac-title">AC3: Validación de porcentajes</span><span class="gh"><span class="kw">Dado</span> que la Línea de negocio de movilidad está configurando reaseguro o coaseguro</span><span class="gh"><span class="kw">Cuando</span> ingresa los porcentajes de cesión o participación</span><span class="gh"><span class="kw">Entonces</span> el sistema valida que sumen un total coherente (no excedan 100%).</span></li>
+<li><span class="ac-title">AC4: Registro de cambios en reaseguro y coaseguro</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realizan cambios en la configuración de reaseguro o coaseguro</span><span class="gh"><span class="kw">Entonces</span> el sistema registra todos los cambios en el Historial_Cambios de la oferta.</span></li>
+</ol>
+</div>
+
+<!-- R14 -->
+<div class="rq" id="r14">
+<div class="rh"><span class="bg">R14</span><h3>Seguridad, Rendimiento y Escalabilidad del Motor de Ofertas</h3></div>
+<div class="us">Como Arquitecto de Solución, quiero que el Motor de Ofertas cumpla con los estándares de seguridad, rendimiento y escalabilidad de la organización, para que soporte picos de demanda masiva consistentes con el crecimiento 3X.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Autenticación OAuth 2.0 con JWT</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se accede a cualquier endpoint del Motor_Ofertas</span><span class="gh"><span class="kw">Entonces</span> el sistema protege todos los endpoints mediante autenticación OAuth 2.0 con tokens JWT firmados por el proveedor de identidad institucional.</span></li>
+<li><span class="ac-title">AC2: Autorización basada en roles (RBAC)</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> un usuario autenticado accede al sistema</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa autorización basada en roles diferenciando al menos: Usuario_Administrador (CRUD completo), Intermediario (solo lectura de ofertas aplicables) y Auditor (solo lectura de historial).</span></li>
+<li><span class="ac-title">AC3: Rate limiting diferenciado</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> un usuario autenticado realiza peticiones</span><span class="gh"><span class="kw">Entonces</span> el sistema aplica rate limiting de 200 req/min por usuario en endpoints de consulta y 50 req/min en endpoints de escritura.</span></li>
+<li><span class="ac-title">AC4: Latencia de consulta</span><span class="gh"><span class="kw">Dado</span> que el sistema opera bajo carga normal (hasta 500 peticiones concurrentes)</span><span class="gh"><span class="kw">Cuando</span> se realizan peticiones de consulta de ofertas</span><span class="gh"><span class="kw">Entonces</span> el sistema responde con una latencia inferior a 200 milisegundos (p95).</span></li>
+<li><span class="ac-title">AC5: Latencia de escritura</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realizan peticiones de escritura (creación, edición, duplicación)</span><span class="gh"><span class="kw">Entonces</span> el sistema responde con una latencia inferior a 3 segundos (p95).</span></li>
+<li><span class="ac-title">AC6: Caché en memoria</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se consultan ofertas activas o Lista_Valores frecuentemente</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa caché en memoria (ElastiCache/Redis) con TTL configurable.</span></li>
+<li><span class="ac-title">AC7: Auto-scaling horizontal</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se presentan picos de demanda</span><span class="gh"><span class="kw">Entonces</span> el sistema soporta auto-scaling horizontal para manejar la carga sin degradación de rendimiento.</span></li>
+<li><span class="ac-title">AC8: Correlation-ID en peticiones</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se procesa cualquier petición</span><span class="gh"><span class="kw">Entonces</span> el sistema incluye un Correlation-ID único y lo propaga a todos los servicios downstream.</span></li>
+<li><span class="ac-title">AC9: Logs estructurados</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se genera cualquier evento de log</span><span class="gh"><span class="kw">Entonces</span> el sistema envía logs estructurados (JSON) al sistema de monitoreo centralizado con campos: timestamp, level, service, correlation-id, message, user-id, action.</span></li>
+<li><span class="ac-title">AC10: Circuit breakers para integraciones</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se realizan llamadas a sistemas externos (Motor_Tarifario, Tronador, Hecopot)</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa circuit breakers para todas las integraciones.</span></li>
+<li><span class="ac-title">AC11: Enmascaramiento de datos sensibles</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se generan respuestas de API o logs</span><span class="gh"><span class="kw">Entonces</span> el sistema enmascara datos sensibles (PII, datos financieros) en todas las respuestas y logs.</span></li>
+<li><span class="ac-title">AC12: Security headers</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se envía cualquier respuesta HTTP</span><span class="gh"><span class="kw">Entonces</span> el sistema aplica security headers: Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, Strict-Transport-Security, Referrer-Policy.</span></li>
+<li><span class="ac-title">AC13: Validación y sanitización de inputs</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se reciben datos de entrada en los boundaries del sistema</span><span class="gh"><span class="kw">Entonces</span> el sistema valida y sanitiza todos los inputs para prevenir inyecciones SQL, XSS y path traversal.</span></li>
+<li><span class="ac-title">AC14: Bloqueo por intentos fallidos de autenticación</span><span class="gh"><span class="kw">Dado</span> que se detectan más de 10 intentos fallidos de autenticación desde una misma IP en 5 minutos</span><span class="gh"><span class="kw">Cuando</span> se alcanza el umbral de intentos</span><span class="gh"><span class="kw">Entonces</span> el sistema bloquea temporalmente la IP por 15 minutos y registra una alerta en el sistema de monitoreo.</span></li>
+</ol>
+</div>
+
+<!-- R15 -->
+<div class="rq" id="r15">
+<div class="rh"><span class="bg">R15</span><h3>Modelo de Datos y Persistencia</h3></div>
+<div class="us">Como Arquitecto de Solución, quiero que el modelo de datos del Motor de Ofertas sea flexible, extensible y garantice integridad referencial, para que soporte la evolución del catálogo de productos sin migraciones disruptivas.</div>
+<p class="cl">Criterios de Aceptación</p>
+<ol class="ca">
+<li><span class="ac-title">AC1: Persistencia en PostgreSQL</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se almacenan datos de ofertas, coberturas, Servicio_Asistencia, exclusiones, restricciones, documentos y configuraciones de reaseguro/coaseguro</span><span class="gh"><span class="kw">Entonces</span> el sistema los almacena en PostgreSQL 15.4+.</span></li>
+<li><span class="ac-title">AC2: Campos adicionales como JSONB</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se gestiona el campo Campos_Adicionales de una oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema lo implementa como tipo de dato JSONB en PostgreSQL para permitir extensibilidad sin cambios de esquema.</span></li>
+<li><span class="ac-title">AC3: Integridad referencial con foreign keys</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se gestionan relaciones entre ofertas y sus componentes (coberturas, servicios, exclusiones, documentos)</span><span class="gh"><span class="kw">Entonces</span> el sistema garantiza integridad referencial mediante foreign keys con restricción ON DELETE CASCADE controlada.</span></li>
+<li><span class="ac-title">AC4: Índices optimizados para consultas frecuentes</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se ejecutan consultas frecuentes</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa índices optimizados para: búsqueda por Código_Oferta, filtrado por estado, filtrado por tipo de vehículo y búsqueda de texto en nombre/descripción.</span></li>
+<li><span class="ac-title">AC5: Historial de cambios con particionamiento</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se almacena el Historial_Cambios</span><span class="gh"><span class="kw">Entonces</span> el sistema lo almacena en una tabla dedicada con particionamiento por fecha para optimizar consultas históricas y gestionar el crecimiento de datos.</span></li>
+<li><span class="ac-title">AC6: Soft delete para ofertas y coberturas</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se elimina una oferta o cobertura</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa soft delete (marcar como eliminadas sin borrar físicamente) para preservar integridad referencial con cotizaciones y pólizas existentes.</span></li>
+<li><span class="ac-title">AC7: Reglas condicionales como JSONB</span><span class="gh"><span class="kw">Dado</span> que el sistema está operativo</span><span class="gh"><span class="kw">Cuando</span> se almacenan Regla_Condicional</span><span class="gh"><span class="kw">Entonces</span> el sistema las almacena como estructuras JSONB que permiten definir condiciones y valores de forma flexible sin cambios de esquema.</span></li>
+<li><span class="ac-title">AC8: Control de concurrencia optimista</span><span class="gh"><span class="kw">Dado</span> que múltiples usuarios pueden editar la misma oferta simultáneamente</span><span class="gh"><span class="kw">Cuando</span> se realizan operaciones de escritura concurrentes sobre la misma oferta</span><span class="gh"><span class="kw">Entonces</span> el sistema implementa control de concurrencia optimista para prevenir pérdida de datos por escrituras simultáneas.</span></li>
+</ol>
+</div>
+
+<!-- Technical Notes -->
+<h2 class="st" id="tech">Notas Técnicas</h2>
+<div class="tg">
+<div class="tc">
+<h3>Stack Tecnológico</h3>
+<ul>
+<li>Frontend: Angular 17+ (LTS) con TypeScript 5.x, o React 18.x + Vite 5.x</li>
+<li>UI: Shadcn UI / Radix UI, Tailwind CSS 3.x</li>
+<li>Backend: Node.js 20.x (LTS) con Express.js 4.x o Fastify 4.x</li>
+<li>Validación: Zod 3.x (TypeScript-first)</li>
+<li>Persistencia: PostgreSQL 15.4+ (AWS RDS) con JSONB</li>
+<li>Caché: ElastiCache (Redis)</li>
+<li>Infra: AWS ECS Fargate, S3, CloudFront, ALB</li>
+<li>CI/CD: GitHub Actions (build, test, SAST, SCA, blue-green)</li>
+<li>Monitoreo: AWS CloudWatch</li>
+</ul>
+</div>
+<div class="tc">
+<h3>Arquitectura</h3>
+<ul>
+<li>Separación estricta: Presentación, Lógica, Persistencia</li>
+<li>API-First con versionamiento en ruta (/v1/api/)</li>
+<li>Motor fuera del core (Tronador) — integración vía APIs REST</li>
+<li>Reglas de negocio parametrizables, no hardcodeadas</li>
+<li>Correlation-ID obligatorio entre capas</li>
+<li>Logs estructurados (JSON) a CloudWatch</li>
+<li>Retries con backoff exponencial + Circuit Breakers</li>
+<li>Control de concurrencia optimista</li>
+<li>Auto-scaling horizontal en ECS Fargate</li>
+</ul>
+</div>
+<div class="tc">
+<h3>Seguridad</h3>
+<ul>
+<li>OAuth 2.0 / OIDC para autenticación; JWT firmados</li>
+<li>RBAC: Administrador, Intermediario, Auditor</li>
+<li>CORS restringido a dominios autorizados</li>
+<li>Rate limiting: lectura 200 req/min, escritura 50 req/min</li>
+<li>Tokens en httpOnly cookies (no localStorage)</li>
+<li>Helmet para security headers</li>
+<li>Datos sensibles enmascarados en API y logs</li>
+<li>Secret management vía AWS Parameter Store</li>
+<li>Validación y sanitización de inputs</li>
+<li>Comunicación exclusivamente mediante DNS</li>
+</ul>
+</div>
+</div>
+
+<!-- Integraciones -->
+<h2 class="st" id="integ">Integraciones</h2>
+<div class="tw">
+<table>
+<thead><tr><th>Sistema</th><th>Tipo</th><th>Propósito</th></tr></thead>
+<tbody>
+<tr><td>Motor_Tarifario</td><td>API REST</td><td>Cálculo de primas por cobertura y prima total</td></tr>
+<tr><td>Tronador (Core)</td><td>API REST</td><td>Consulta guía Fasecolda, datos de referencia</td></tr>
+<tr><td>Hecopot</td><td>API REST</td><td>Validaciones complementarias</td></tr>
+<tr><td>Módulo de Cotización</td><td>API REST</td><td>Consumo de ofertas activas para cotización</td></tr>
+<tr><td>Sistema de Emisión</td><td>API REST</td><td>Generación de pólizas con documentos parametrizados</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Ofertas MVP -->
+<h2 class="st" id="mvp">Ofertas MVP Iniciales</h2>
+<div class="tw">
+<table>
+<thead><tr><th>Oferta</th><th>Tipo Vehículo</th><th>Coberturas Principales</th><th>Diferenciador</th></tr></thead>
+<tbody>
+<tr><td>Pesados Premium</td><td>Camiones, Furgones, Chásis, Remolques, Camionetas cerradas de reparto</td><td>RC Extracontractual (5,250M), GAP Patrimonial (20% VA), Accidentes Personales (30M), Renta Diaria condicional</td><td>Máxima protección, bolsa combinada más alta</td></tr>
+<tr><td>Pesados Estándar</td><td>Camiones, Furgones, Chásis, Remolques, Camionetas cerradas de reparto</td><td>RC Extracontractual (3,500M), GAP Patrimonial (10% VA), Accidentes Personales (15M), Renta Diaria condicional</td><td>Balance protección-costo</td></tr>
+<tr><td>Pesados Clásico</td><td>Camiones, Furgones, Chásis, Remolques, Camionetas cerradas de reparto</td><td>RC Extracontractual (2,000M), Sin GAP, Sin Accidentes Personales</td><td>Protección básica, precio competitivo</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Definition of Done -->
+<h2 class="st" id="dod">Definition of Done</h2>
+<div class="sb">
+<ol class="dod">
+<li>Todos los criterios de aceptación de los requisitos 1-15 verificados y aprobados.</li>
+<li>Ofertas MVP (Premium, Estándar, Clásico) creadas y configuradas con todas sus coberturas y servicios.</li>
+<li>Latencia de consulta de ofertas inferior a 200ms (p95) validada con prueba de carga a 500 peticiones concurrentes.</li>
+<li>Integración con Motor_Tarifario funcional con respuesta en menos de 5 segundos.</li>
+<li>Cobertura de tests unitarios superior al 80%.</li>
+<li>Tests de integración para endpoints de ofertas, coberturas, listas de valores e historial.</li>
+<li>Smoke tests E2E ejecutados post-deploy en cada ambiente.</li>
+<li>SAST y SCA ejecutados sin vulnerabilidades críticas o altas.</li>
+<li>Documentación OpenAPI/Swagger actualizada para todos los endpoints del Motor_Ofertas.</li>
+<li>Logs estructurados con Correlation-ID verificados en CloudWatch.</li>
+<li>Rate limiting, circuit breakers y auto-scaling validados en ambiente de staging.</li>
+<li>RBAC verificado: Administrador con CRUD, Intermediario con solo lectura, Auditor con solo historial.</li>
+<li>Control de concurrencia optimista validado con pruebas de escritura simultánea.</li>
+<li>Revisión de código aprobada (mínimo 1 reviewer).</li>
+<li>Deploy progresivo (blue-green) configurado para producción.</li>
+</ol>
+</div>
+
+<!-- Footer -->
 <footer class="ft">
 <p>Documento de Requisitos — Módulo de Creación de Ofertas 3X Movilidad · Seguros Bolívar · Abril 2026</p>
 <p>Criterios de aceptación en formato Gherkin (Dado / Cuando / Entonces)</p>
